@@ -1,11 +1,9 @@
 name: Publish to GH Pages
 
-on:
-  workflow_call:
-    secrets:
-      TOKEN:
-        description: 'The GitHub PAT token to perform checkout and publish.'
-        required: true
+on: 
+    push: 
+        branches:
+            - main
 
 jobs:
   deploy:
