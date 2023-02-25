@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import { provider as ProviderType } from "web3-core";
-import { Contract } from "web3-eth-contract";
+import { Contract, ethers } from "ethers";
 import erc20 from "../config/abi/erc20.json";
 
 export const getContract = (provider: ProviderType, address: string) => {
@@ -10,17 +10,33 @@ export const getContract = (provider: ProviderType, address: string) => {
 };
 
 export const getAllowance = async (
-  lpContract: Contract,
-  masterChefContract: Contract,
+  tokenContract: Contract,
+  swapAddress: string,
   account: string
 ): Promise<string> => {
   try {
-    const allowance: string = await lpContract.methods
-      .allowance(account, masterChefContract.options.address)
-      .call();
+    const allowance: string = await tokenContract.allowance(
+      account,
+      swapAddress
+    );
     return allowance;
   } catch (e) {
     return "0";
+  }
+};
+
+export const approveToken = async (
+  tokenContract: Contract,
+  swapAddress: string
+): Promise<boolean> => {
+  try {
+    const res = await tokenContract.approve(
+      swapAddress,
+      ethers.constants.MaxUint256
+    );
+    return res;
+  } catch (e) {
+    return false;
   }
 };
 

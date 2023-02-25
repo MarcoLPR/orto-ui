@@ -12,6 +12,9 @@ import FullWidthButton from "../components/shared/buttons/FullWidthButton";
 import FullWidthGroupButtons from "../components/shared/buttons/FullWidthGroupButtons";
 import AutoMarginButton from "../components/shared/buttons/AutoMarginButton";
 import { useBuyOrto, useSellOrto } from "../hooks/useSwap";
+import { useOrtoAllowance, useUsdAllowance } from "../hooks/useAllowance";
+import { useOrtoApprove, useUsdApprove } from "../hooks/useApprove";
+import { useWeb3React } from "@web3-react/core";
 
 const calculateAmountWithSlippage = (amount: number, slippage: number) => {
   const multiplier = 1 - slippage / 100;
@@ -63,12 +66,26 @@ const getActiveButton = (slippage: number) => {
 };
 
 const Swap = () => {
+  const { account } = useWeb3React();
   const [slippage, setSlippage] = React.useState(0.1);
   const [ortoBalance, usdAmount, setUsdAmount] = useSwapOrtoAmounts();
   const [usdBalance, penalty, ortoAmount, setOrtoAmount] = useSwapUsdAmounts();
   const [theoricPrice] = useTheoricPrice();
   const buyCallback = useBuyOrto();
   const sellCallback = useSellOrto();
+  const [ortoAllowance, getOrtoAllowance] = useOrtoAllowance();
+  const [usdAllowance, getUsdAllowance] = useUsdAllowance();
+  const ortoApprove = useOrtoApprove();
+  const usdApprove = useUsdApprove();
+
+  React.useEffect(() => {
+    if (typeof getOrtoAllowance !== "string") {
+      getOrtoAllowance();
+    }
+    if (typeof getUsdAllowance !== "string") {
+      getUsdAllowance();
+    }
+  }, [getOrtoAllowance, getUsdAllowance, account]);
 
   const changeUsdAmount = (e: any) => {
     (setUsdAmount as React.Dispatch<React.SetStateAction<string>>)(
@@ -79,6 +96,20 @@ const Swap = () => {
     (setOrtoAmount as React.Dispatch<React.SetStateAction<string>>)(
       e.target.value.toString()
     );
+  };
+
+  const onOrtoApprove = async () => {
+    const res = await ortoApprove();
+    if (res && typeof getOrtoAllowance !== "string") {
+      getOrtoAllowance();
+    }
+  };
+
+  const onUsdApprove = async () => {
+    const res = await usdApprove();
+    if (res && typeof getUsdAllowance !== "string") {
+      getUsdAllowance();
+    }
   };
 
   const changeSlippage = (e: any) => {
@@ -113,7 +144,13 @@ const Swap = () => {
         <FlexGridItem>
           <SwapCard
             actions={
-              <FullWidthButton onClick={swapUsdForOrto}>Swap</FullWidthButton>
+              <FullWidthButton
+                onClick={
+                  String(usdAllowance) === "0" ? onUsdApprove : swapUsdForOrto
+                }
+              >
+                {String(usdAllowance) === "0" ? "Approve" : "Swap"}
+              </FullWidthButton>
             }
             headerImage="https://wallpapertag.com/wallpaper/middle/9/1/5/135874-download-free-low-poly-background-1920x1080.jpg"
           >
@@ -136,7 +173,13 @@ const Swap = () => {
         <FlexGridItem>
           <SwapCard
             actions={
-              <FullWidthButton onClick={swapOrtoForUsd}>Swap</FullWidthButton>
+              <FullWidthButton
+                onClick={
+                  String(ortoAllowance) === "0" ? onOrtoApprove : swapOrtoForUsd
+                }
+              >
+                {String(ortoAllowance) === "0" ? "Approve" : "Swap"}
+              </FullWidthButton>
             }
             headerImage="https://wallpapertag.com/wallpaper/middle/9/1/5/135874-download-free-low-poly-background-1920x1080.jpg"
           >

@@ -29,7 +29,7 @@ const Referral = () => {
       <Card>
         <StyledBody>
           <DisplayXSmall>{`Referrals: ${numberOfReferrals}`}</DisplayXSmall>
-          <DisplayXSmall>{`ORTO gained from referrals: ${amountGainedFromReferrals}`}</DisplayXSmall>
+          <DisplayXSmall>{`ORTO gained from referrals: ${amountGainedFromReferrals} USD`}</DisplayXSmall>
         </StyledBody>
       </Card>
     </Page>

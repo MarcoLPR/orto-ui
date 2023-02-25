@@ -89,9 +89,8 @@ export const getReferrerInfo = async (
 ): Promise<string[]> => {
   try {
     const referrerInfo = await contract.referringInfo(address);
-    console.log(referrerInfo[0], referrerInfo[1]);
-    const referrals = referrerInfo[0].div(multiplier).toString();
-    const rewards = referrerInfo[1].div(multiplier).toFixed(2);
+    const rewards = new BigNumber(referrerInfo[0].toString()).div(multiplier).toFixed(6);
+    const referrals = referrerInfo[1];
 
     return [referrals, rewards];
   } catch (e) {
@@ -134,6 +133,7 @@ export const sellOrto = async (
       bigNumberMinReceived
     );
   } catch (e) {
+    console.log(e);
     return false;
   }
 };
@@ -151,6 +151,7 @@ export const buyOrto = async (
     new BigNumber(minReceived).times(multiplier)
   );
   try {
+    console.log(contract);
     return await contract.buyOrto(
       bigNumberBalance,
       bigNumberMinReceived,
