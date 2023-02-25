@@ -11,8 +11,7 @@ import { SwapCard } from "../components/shared";
 import FullWidthButton from "../components/shared/buttons/FullWidthButton";
 import FullWidthGroupButtons from "../components/shared/buttons/FullWidthGroupButtons";
 import AutoMarginButton from "../components/shared/buttons/AutoMarginButton";
-import { useReferrer } from "../hooks/useReferrer";
-import { useSwapOrtoForTokens, useSwapTokensForOrto } from "../hooks/useSwap";
+import { useBuyOrto, useSellOrto } from "../hooks/useSwap";
 
 const calculateAmountWithSlippage = (amount: number, slippage: number) => {
   const multiplier = 1 - slippage / 100;
@@ -68,8 +67,8 @@ const Swap = () => {
   const [ortoBalance, usdAmount, setUsdAmount] = useSwapOrtoAmounts();
   const [usdBalance, penalty, ortoAmount, setOrtoAmount] = useSwapUsdAmounts();
   const [theoricPrice] = useTheoricPrice();
-  const buyCallback = useSwapTokensForOrto();
-  const sellCallback = useSwapOrtoForTokens();
+  const buyCallback = useBuyOrto();
+  const sellCallback = useSellOrto();
 
   const changeUsdAmount = (e: any) => {
     (setUsdAmount as React.Dispatch<React.SetStateAction<string>>)(
@@ -98,11 +97,6 @@ const Swap = () => {
   };
 
   const swapUsdForOrto = async () => {
-    console.log(
-      "swapUsdForOrto",
-      usdAmount.toString(),
-      calculateAmountWithSlippage(Number(ortoBalance), slippage)
-    );
     await buyCallback(
       usdAmount.toString(),
       calculateAmountWithSlippage(Number(ortoBalance), slippage)

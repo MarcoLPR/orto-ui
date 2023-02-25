@@ -117,7 +117,7 @@ export const reserveORTO = async (contract: Contract): Promise<string> => {
   }
 };
 
-export const swapOrtoForTokens = async (
+export const sellOrto = async (
   contract: Contract,
   balance: string,
   minReceived: string
@@ -129,7 +129,7 @@ export const swapOrtoForTokens = async (
     new BigNumber(minReceived).times(multiplier)
   );
   try {
-    return await contract.swapOrtoForTokens(
+    return await contract.sellOrto(
       bigNumberBalance,
       bigNumberMinReceived
     );
@@ -138,7 +138,7 @@ export const swapOrtoForTokens = async (
   }
 };
 
-export const swapTokensForOrto = async (
+export const buyOrto = async (
   contract: Contract,
   balance: string,
   minReceived: string,
@@ -151,7 +151,7 @@ export const swapTokensForOrto = async (
     new BigNumber(minReceived).times(multiplier)
   );
   try {
-    return await contract.swapTokensForOrto(
+    return await contract.buyOrto(
       bigNumberBalance,
       bigNumberMinReceived,
       referrer

@@ -1,14 +1,15 @@
 import React from "react";
-import { swapOrtoForTokens, swapTokensForOrto } from "../utils/ortoSwap";
+import { buyOrto, sellOrto } from "../utils/ortoSwap";
 import { useSwapContract } from "./useContract";
 import { useReferrer } from "./useReferrer";
 
-export const useSwapOrtoForTokens = () => {
+export const useBuyOrto = () => {
   const contract = useSwapContract();
+  const referrer = useReferrer();
 
   const callback = React.useCallback(
     async (tokenAmount: string, minReceived: string) => {
-      const res = await swapOrtoForTokens(contract!, tokenAmount, minReceived);
+      const res = await buyOrto(contract!, tokenAmount, minReceived, referrer);
       return res;
     },
     [contract]
@@ -17,18 +18,12 @@ export const useSwapOrtoForTokens = () => {
   return callback;
 };
 
-export const useSwapTokensForOrto = () => {
+export const useSellOrto = () => {
   const contract = useSwapContract();
-  const referrer = useReferrer();
 
   const callback = React.useCallback(
     async (tokenAmount: string, minReceived: string) => {
-      const res = await swapTokensForOrto(
-        contract!,
-        tokenAmount,
-        minReceived,
-        referrer
-      );
+      const res = await sellOrto(contract!, tokenAmount, minReceived);
       return res;
     },
     [contract]
