@@ -79,7 +79,7 @@ export const getReferrer = async (
   try {
     return await contract.referrer(address);
   } catch (e) {
-    return "0xcB978C0c28E7D6960dA5716D19A0cE44699a6301";
+    return "0x0000000000000000000000000000000000000000";
   }
 };
 

@@ -9,7 +9,7 @@ const NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const useReferrer = () => {
   const { account } = useActiveWeb3React();
   const [searchParams] = useSearchParams();
-  const [referrer, setReferrer] = React.useState("");
+  const [referrer, setReferrer] = React.useState("0x0000000000000000000000000000000000000000");
   const contract = useSwapContract();
 
   React.useEffect(() => {
