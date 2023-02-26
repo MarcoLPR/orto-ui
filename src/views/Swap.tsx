@@ -18,7 +18,7 @@ import { useWeb3React } from "@web3-react/core";
 
 const calculateAmountWithSlippage = (amount: number, slippage: number) => {
   const multiplier = 1 - slippage / 100;
-  return (amount * multiplier).toFixed(2);
+  return amount * multiplier;
 };
 
 const calculateNetAmount = (amount: number, penalty: number) =>
@@ -123,14 +123,14 @@ const Swap = () => {
   const swapOrtoForUsd = async () => {
     await sellCallback(
       ortoAmount.toString(),
-      calculateAmountWithSlippage(Number(usdBalance), slippage)
+      calculateAmountWithSlippage(Number(usdBalance), slippage).toString()
     );
   };
 
   const swapUsdForOrto = async () => {
     await buyCallback(
       usdAmount.toString(),
-      calculateAmountWithSlippage(Number(ortoBalance), slippage)
+      calculateAmountWithSlippage(Number(ortoBalance), slippage).toString()
     );
   };
 

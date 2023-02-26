@@ -19,7 +19,7 @@ export const getAmountOrtoForTokens = async (
     );
     const formattedResult = new BigNumber(ortoBalance.toString())
       .div(multiplier)
-      .toFixed(2);
+      .toString();
 
     return formattedResult;
   } catch (e) {
@@ -42,10 +42,10 @@ export const getAmountTokensForOrto = async (
 
     const formattedResult = new BigNumber(usdBalance.toString())
       .div(multiplier)
-      .toFixed(2);
+      .toString();
     const formattedPenalty = new BigNumber(penalty.toString())
       .div(multiplier)
-      .toFixed(2);
+      .toString();
 
     return [formattedResult, formattedPenalty];
   } catch (e) {
@@ -64,7 +64,7 @@ export const getSalePenalty = async (
     const penalty: BigNumber = await contract.getSalePenalty(bigNumberBalance);
     const formattedResult = new BigNumber(penalty.toString())
       .div(multiplier)
-      .toFixed(2);
+      .toString();
 
     return formattedResult;
   } catch (e) {
@@ -89,7 +89,9 @@ export const getReferrerInfo = async (
 ): Promise<string[]> => {
   try {
     const referrerInfo = await contract.referringInfo(address);
-    const rewards = new BigNumber(referrerInfo[0].toString()).div(multiplier).toFixed(6);
+    const rewards = new BigNumber(referrerInfo[0].toString())
+      .div(multiplier)
+      .toFixed(6);
     const referrals = referrerInfo[1];
 
     return [referrals, rewards];
@@ -128,10 +130,7 @@ export const sellOrto = async (
     new BigNumber(minReceived).times(multiplier)
   );
   try {
-    return await contract.sellOrto(
-      bigNumberBalance,
-      bigNumberMinReceived
-    );
+    return await contract.sellOrto(bigNumberBalance, bigNumberMinReceived);
   } catch (e) {
     console.log(e);
     return false;
@@ -151,7 +150,6 @@ export const buyOrto = async (
     new BigNumber(minReceived).times(multiplier)
   );
   try {
-    console.log(contract);
     return await contract.buyOrto(
       bigNumberBalance,
       bigNumberMinReceived,
