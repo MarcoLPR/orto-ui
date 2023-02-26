@@ -118,6 +118,15 @@ export const reserveORTO = async (contract: Contract): Promise<string> => {
   }
 };
 
+export const getCommunityAddress = async (contract: Contract): Promise<string> => {
+  try {
+    const communityAddress: string = await contract.communityAddress();
+    return communityAddress;
+  } catch (e) {
+    return "0";
+  }
+};
+
 export const sellOrto = async (
   contract: Contract,
   balance: string,
@@ -130,6 +139,7 @@ export const sellOrto = async (
     new BigNumber(minReceived).times(multiplier)
   );
   try {
+    console.log(bigNumberBalance.toString(), bigNumberMinReceived.toString());
     return await contract.sellOrto(bigNumberBalance, bigNumberMinReceived);
   } catch (e) {
     console.log(e);

@@ -14,7 +14,7 @@ const Referral = () => {
 
   React.useEffect(() => {
     if (account) {
-      setReferralLink(`https://orto.finance/?ref=${account}`);
+      setReferralLink(`https://orto-ui.vercel.app/?ref=${account}`);
     }
   }, [account]);
 
