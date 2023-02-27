@@ -1,3 +1,3 @@
-export const swapOrtoAddress = "0x4feE70597cB170EDf8Dd26B03eb963E912dB9Dc9";
-export const ortoAddress = "0x0fAa4ab9097A0004dEeb48aB580B4EF76EeEBd65";
-export const usdAddress = "0x62CC6bED64f9551e96a62853281a5157c3915d45";
+export const swapOrtoAddress = "0x8DDf90C8Cc7775506A008fd921c38CfF42AC57D6";
+export const ortoAddress = "0xE19Ee8d8E73Da271dc7D2dCbB155008dBA2F559A";
+export const usdAddress = "0x69FA09B2F7D87d203Ee44B855a162f7274a52F7f";
