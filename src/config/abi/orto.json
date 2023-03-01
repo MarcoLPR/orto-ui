@@ -104,7 +104,7 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_amounOrtotIn",
+				"name": "_amounTokenIn",
 				"type": "uint256"
 			},
 			{
@@ -297,7 +297,7 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_amountTokenIn",
+				"name": "_amounOrtoIn",
 				"type": "uint256"
 			},
 			{
@@ -625,7 +625,12 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_tokens",
+				"name": "_amountIn",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_prevReserve",
 				"type": "uint256"
 			}
 		],
@@ -646,6 +651,11 @@
 				"internalType": "uint256",
 				"name": "_ortoAmount",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "preOrtoBal",
+				"type": "uint256"
 			}
 		],
 		"name": "getAmountTokensForOrto",
@@ -660,7 +670,13 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_preOrtoBalance",
+				"type": "uint256"
+			}
+		],
 		"name": "getPenaltyRatio",
 		"outputs": [
 			{
@@ -690,6 +706,11 @@
 			{
 				"internalType": "uint256",
 				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_preOrtoBalance",
 				"type": "uint256"
 			}
 		],
@@ -835,11 +856,16 @@
 			},
 			{
 				"internalType": "uint256",
-				"name": "_ortoAmount",
+				"name": "_increasedOrto",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_decreasedReserves",
 				"type": "uint256"
 			}
 		],
-		"name": "reductionAfterSwap",
+		"name": "reductionAfterSell",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -899,7 +925,7 @@
 			},
 			{
 				"internalType": "uint256",
-				"name": "referrers",
+				"name": "referreds",
 				"type": "uint256"
 			}
 		],

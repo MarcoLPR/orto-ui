@@ -14,8 +14,10 @@ export const getAmountOrtoForTokens = async (
     new BigNumber(balance).times(multiplier)
   );
   try {
+    const reserves: BigNumber = await contract!.reserves();
     const ortoBalance: BigNumber = await contract!.getAmountOrtoForTokens(
-      bigNumberBalance
+      bigNumberBalance,
+      reserves
     );
     const formattedResult = new BigNumber(ortoBalance.toString())
       .div(multiplier)
@@ -35,10 +37,12 @@ export const getAmountTokensForOrto = async (
     new BigNumber(balance).times(multiplier)
   );
   try {
+    const ortoBalance: BigNumber = await contract.balanceORTO();
     const usdBalance: BigNumber = await contract.getAmountTokensForOrto(
-      bigNumberBalance
+      bigNumberBalance,
+      ortoBalance
     );
-    const penalty: BigNumber = await contract.getSalePenalty(usdBalance);
+    const penalty: BigNumber = await contract.getSalePenalty(usdBalance, ortoBalance);
 
     const formattedResult = new BigNumber(usdBalance.toString())
       .div(multiplier)
@@ -118,7 +122,9 @@ export const reserveORTO = async (contract: Contract): Promise<string> => {
   }
 };
 
-export const getCommunityAddress = async (contract: Contract): Promise<string> => {
+export const getCommunityAddress = async (
+  contract: Contract
+): Promise<string> => {
   try {
     const communityAddress: string = await contract.communityAddress();
     return communityAddress;
